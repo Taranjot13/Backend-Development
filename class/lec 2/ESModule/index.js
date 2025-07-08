@@ -11,4 +11,6 @@ export function mult(a, b) {
 
 export default mult;
 // export default add;
-// export default sub;
+// export default sub; 
+// These are recently edited files. Do not suggest code that has been deleted.
+
