@@ -11,21 +11,9 @@ let products=[
         quantity:1
     }
 ]
-
-// function buyProduct(product_name,cb){
-//     //some asynchronous operation
-//     //1. get product detaile from product db
-//     //2. write order detail in user db
-//     setTimeout(()=>{
-//         console.log("order complete");
-//         cb();
-//     })
-// }
-
-
-// console.log("product is purchased")
-function buyProduct(product_name,cb){
- let isproduct =null
+function buyProduct(product_name){
+ return new Promise((resolve,reject)=>{
+    let isproduct =null
  //implement for loop to find product in an array
  //find product object from product array who's name is eual to product_name
  for(let i =0 ; i<products.length;i++){
@@ -35,38 +23,49 @@ function buyProduct(product_name,cb){
     }
  }
  if(!isproduct){
-    cb("product is not available",null)
+    return reject("no product found")
  }else{
-    cb(null,isproduct.amount);
-    cb(null,isproduct.amount);
+    resolve(isproduct.amount)
+    // cb(null,isproduct.amount);
 
  }
+ })
 }
-
-function deductAmount(amount,cb){
-    if(amount>account_balance){
-        cb("your account balanace is low",null)
+function deductAmount(amount){
+    return new Promise((resolve,reject)=>{
+            if(amount>account_balance){
+         return reject("low bank balance")
     }else{
         account_balance-=amount;
-        cb(null,"your product is purchased")
-        
+        return resolve("product is purchased")    
     }
+    })
+    
 
 }
+// buyProduct("Iphone 16")
+// .then((data)=>{
+//  return deductAmount(data)
+// })
+// .then((message)=>{
+//     console.log(message)
+//     console.log(account_balance);
+// })
+// .catch((err)=>{
+// console.log(err);
+// })
+async function myfun(){
+    try {
+        let amount= await buyProduct("motrolla")
+        let message=await deductAmount(amount)
+        console.log(message) 
+    } catch (error) {
+        console.log(error)
+    }
+   
+}
+console.log(myfun())
+console.log("start");
+console.log("end");
 
 
-buyProduct("Iphone 16",function(err,amount){
-    // console.log("product is purchased");
-    if(err) return console.log(err)
-        console.log(amount)
-    deductAmount(amount,function(err,message){
-            if(err) return console.log(err);
-            console.log(message)
-            console.log(account_balance)
-    });
-
-})
-
-//problems in callback
-//1. callback hell;
-//2. dont have control on your own code;

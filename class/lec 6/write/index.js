@@ -1,7 +1,7 @@
-const fs=require("fs");
+const fs = require("fs");
 
 
-fs.writeFile("../demo.txt","hello g27",function(err,data){
+fs.writeFile("../demo2.txt","hello world", function(err){
     if(err) return console.log(err);
-    console.log("success!!");
-});
+    console.log("success!!")
+})
