@@ -1,16 +1,16 @@
-function getUsers(URL){
-    fetch(URL)
-        .then(res => {
-            console.log(res);
-            return res.json();
-    })
-    .then((data) => {
-            console.log(data);
-    })
-    .catch((err) => {
-        console.error(err);
-    })
-}
+const express=require("express");
+const app=express();
+const fs=require("fs");
+app.use(express.static("public"));
+app.get("/users",(req,res)=>{
+    fs.readFile("users.json","utf-8",function(err,data){
+        if(err) return res.send(err);
+        let users=JSON.parse(data);
+        res.json(users);
+    });
+})
 
-getUsers("https://jsonplaceholder.typicode.com/users");
 
+app.listen(3001,()=>{
+    console.log("Server started");
+})
