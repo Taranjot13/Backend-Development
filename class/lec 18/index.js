@@ -3,6 +3,7 @@ const app = express();
 const mongoose = require('mongoose');
 const Blog= require('./model/blog');
 const userRoutes = require('./userRoutes');
+const user = require('./model/user');
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use('/users', userRoutes);
@@ -17,6 +18,9 @@ app.post('/blogs', async(req, res) => {
   }
   let newBlog=new Blog(blog)
   await newBlog.save()
+  let user= await User.findById(userid);
+  userRoutes.blogs.push(newBlog._id);
+  await user.save();
   res.json({
 	success: true,
 	message: "Blog created successfully",
