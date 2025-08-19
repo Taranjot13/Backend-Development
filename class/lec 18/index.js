@@ -50,6 +50,24 @@ app.get('/blogs/:id', async(req, res) => {
 	})
 })
 
+app.delete('/blogs/:id', async(req, res) => {
+	let blogId = req.params.blogId;
+	let userId = req.body.userId;
+	let blog = await Blog.findByIdAndDelete(blogId);
+	if(!blogExists) {
+		return res.json({
+			success: false,
+			message: "Blog not found"
+		});
+	}
+	if(blogExist.userId!=userId) {
+		return res.json({
+			success: false,
+			message: "You are not authorized to delete this blog"
+		});
+	}
+	await Blog.findByIdAndDelete(blogId);
+})
 
 
 mongoose.connect('mongodb://127.0.0.1:27017/G27DBs')
