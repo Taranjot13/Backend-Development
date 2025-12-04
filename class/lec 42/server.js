@@ -25,7 +25,7 @@ app.post("/api/users/register",async (req,res)=>{
 });
 
 
-
+module.exports=app;
 // app.listen(4444,()=>{
 //     console.log("Server is running on port 4444");
 // })
